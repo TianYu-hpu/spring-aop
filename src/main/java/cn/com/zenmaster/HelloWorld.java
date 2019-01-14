@@ -17,8 +17,8 @@ public class HelloWorld {
 	//@Auth
 	@Log
 	@GetMapping("/hello")
-	public Object hello() {
-		return "hello";
+	public Object hello(String name) {
+		return "hello" + name;
 	}
 
 }
