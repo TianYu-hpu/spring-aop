@@ -1,6 +1,6 @@
 package cn.com.zenmaster.aop.aspect;
 
-import cn.com.zenmaster.service.LockService;
+import cn.com.zenmaster.zk.ZooKeeperSession;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -12,21 +12,21 @@ import javax.annotation.Resource;
 /**
  * @Author: tianyu
  * @Date: 2019/1/14 17:13
- * @Description: 分布式锁
+ * @Description: 基于Zookeeper实现的分布式锁
  */
 @Component
 @Aspect
 @Slf4j
-public class DistrubuteLockAspect {
+public class ZookeeperDistrubuteLockAspect {
 
 	@Resource
-	private LockService lockService;
+	private ZooKeeperSession zooKeeperSession;
 
-	@Around(value = "execution(* cn.com.zenmaster..*.*(..)) && @annotation(cn.com.zenmaster.aop.annotation.DistrubuteLock) && args(name,..)")
+	@Around(value = "execution(* cn.com.zenmaster..*.*(..)) && @annotation(cn.com.zenmaster.aop.annotation.ZookeeperDistrubuteLock) && args(name,..)")
 	public Object process(ProceedingJoinPoint pjp, String name) throws Throwable {
-		lockService.lock(name);
+		zooKeeperSession.lock(name);
 		Object result = pjp.proceed();
-		lockService.unlock(name);
+		zooKeeperSession.unlock(name);
 		return result;
 	}
 
