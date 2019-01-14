@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @ResponseBody
-public class HelloWorld {
+public class HelloWorldController {
 
 	//@Auth
 	@Log
