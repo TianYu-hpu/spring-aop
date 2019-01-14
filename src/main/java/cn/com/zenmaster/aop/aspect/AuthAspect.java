@@ -7,6 +7,8 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @Author: tianyu
  * @Date: 2019/1/14 17:13
@@ -23,7 +25,10 @@ public class AuthAspect {
 		if(!StringUtils.isEmpty(name)) {
 			return pjp.proceed();
 		} else {
-			log.info(" time:{}", System.currentTimeMillis());
+			HttpServletRequest request = (HttpServletRequest) pjp.getArgs()[1];
+			String ip = request.getRemoteAddr();
+
+			log.info(" 非法访问:IP:{}, time:{}", ip, System.currentTimeMillis());
 			throw new RuntimeException("非法访问");
 		}
 	}
