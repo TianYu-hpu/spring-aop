@@ -1,15 +1,15 @@
-package cn.com.zenmaster;
+package cn.com.zenmaster.aop.annotation;
 
 import java.lang.annotation.*;
 
 /**
  * @Author: tianyu
- * @Date: 2019/1/14 16:23
+ * @Date: 2019/1/14 17:12
  * @Description:
  */
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface Log {
+public @interface Auth {
 }
