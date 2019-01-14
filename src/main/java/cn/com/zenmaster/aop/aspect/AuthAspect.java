@@ -1,35 +1,30 @@
 package cn.com.zenmaster.aop.aspect;
 
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 /**
  * @Author: tianyu
  * @Date: 2019/1/14 17:13
- * @Description:
+ * @Description: 认证授权
  */
 @Component
 @Aspect
 @Slf4j
 public class AuthAspect {
 
-	/*@Around(value = "execution(* cn.com.zenmaster..*.*(..)) && @annotation(cn.com.zenmaster.aop.annotation.Auth)")
-	public Object process(ProceedingJoinPoint pjp) throws Throwable {
-		String name = pjp.getSignature().getName();
-		if(name.equals("hello")) {
-			throw new RuntimeException("没有权限");
-		}
-		return pjp.proceed();
-	}*/
-
-	@Before(value = "execution(* cn.com.zenmaster..*.*(..)) && @annotation(cn.com.zenmaster.aop.annotation.Auth)")
-	public void process(JoinPoint pjp) throws Throwable {
-		String name = pjp.getSignature().getName();
-		if(name.equals("hello")) {
-			throw new RuntimeException("没有权限");
+	@Around(value = "execution(* cn.com.zenmaster..*.*(..)) && @annotation(cn.com.zenmaster.aop.annotation.Auth) && args(name,..)")
+	public Object process(ProceedingJoinPoint pjp, String name) throws Throwable {
+		log.info("current time:{}, name:{}", System.currentTimeMillis(), name);
+		if(!StringUtils.isEmpty(name)) {
+			return pjp.proceed();
+		} else {
+			log.info(" time:{}", System.currentTimeMillis());
+			throw new RuntimeException("非法访问");
 		}
 	}
 

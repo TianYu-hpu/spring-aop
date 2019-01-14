@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 /**
  * @Author: tianyu
  * @Date: 2019/1/14 16:10
- * @Description:
+ * @Description: 记录日志
  */
 @Component
 @Aspect
@@ -25,7 +25,9 @@ public class LogAspect {
 	 */
 	@Around(value = "execution(* cn.com.zenmaster..*.*(..)) && @annotation(cn.com.zenmaster.aop.annotation.Log) && args(name,..)")
 	public Object process(ProceedingJoinPoint pjp, String name) throws Throwable {
-		log.info("current time:{}, name:{}", System.currentTimeMillis(), name);
+		String className = pjp.getTarget().getClass().getName();
+		String methodName = pjp.getSignature().getName();
+		log.info("current time:{}, name:{}, className:{}, methodName:{}", System.currentTimeMillis(), name, className, methodName);
 		return pjp.proceed();
 	}
 
