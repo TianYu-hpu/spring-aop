@@ -1,4 +1,4 @@
-package cn.com.zenmaster;
+package cn.com.zenmaster.controller;
 
 import cn.com.zenmaster.aop.annotation.Auth;
 import cn.com.zenmaster.aop.annotation.ExceptionMonitor;

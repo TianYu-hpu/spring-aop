@@ -81,6 +81,11 @@ public class ZooKeeperSession {
 				break;
 			}
 		}
+		private static ZooKeeperSession instance;
+
+		static {
+			instance = new ZooKeeperSession();
+		}
 	}
 
 	/**
@@ -119,11 +124,6 @@ public class ZooKeeperSession {
 	 */
 	private static class Singleton {
 
-		private static ZooKeeperSession instance;
-
-		static {
-			instance = new ZooKeeperSession();
-		}
 
 		public static ZooKeeperSession getInstance() {
 			return instance;

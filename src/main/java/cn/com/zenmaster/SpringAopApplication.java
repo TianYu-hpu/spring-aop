@@ -1,5 +1,6 @@
 package cn.com.zenmaster;
 
+import cn.com.zenmaster.zk.ZooKeeperSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -32,6 +33,11 @@ public class SpringAopApplication {
 		jedisClusterNodes.add(new HostAndPort("192.168.0.136", 6379));
 		JedisCluster jedisCluster = new JedisCluster(jedisClusterNodes);
 		return jedisCluster;
+	}
+
+	@Bean
+	public ZooKeeperSession zkSession() {
+		return ZooKeeperSession.getInstance();
 	}
 
 }
